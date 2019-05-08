@@ -1,0 +1,12 @@
+Learning the basics of building video games using html5:
+
+1. Motion.
+2. Collision.
+3. Handling Input.
+
+
+Will be using HTML5 canvas, runs in the browser.
+
+Using the canvas element.
+  -- everything in js runs inside the canvas element.
+  

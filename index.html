@@ -2,10 +2,134 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Ping Pong</title>
+    <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
-
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
   </body>
-<script src="js/main.js"></script>
+<script>
+
+
+var canvas;
+var canvasContext;
+
+var ballX       = 50;
+var ballY       = 50;
+var ballSpeedX  = 10;
+var ballSpeedY  = 4;
+
+var paddle1Y    = 250;
+var paddle2Y    = 250;
+
+var PADDLE_THICKNESS = 10;
+var PADDLE_HEIGHT = 100;
+
+
+function calculateMousePos(evt){
+  var rect = canvas.getBoundingClientRect();
+  var root = document.documentElement;
+  var mouseX = evt.clientX - rect.left - root.scrollLeft;
+  var mouseY = evt.clientY - rect.top - root.scrollTop;
+  return{
+    x:mouseX,
+    y:mouseY
+  };
+
+}
+
+
+window.onload = function(){
+  console.log("Loaded");
+  canvas = document.getElementById('gameCanvas');
+  canvasContext = canvas.getContext('2d');
+
+  var framesPerSecond = 30;
+  setInterval(function(){
+    moveEverything();
+    drawEverything();
+  }, 1000/framesPerSecond);
+
+  canvas.addEventListener('mousemove',
+    function(evt) {
+      var mousePos = calculateMousePos(evt);
+      paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
+    });
+}
+
+
+function callBoth(){
+  drawEverything();
+  moveEverything();
+}
+
+
+function colorRect(leftX,topY,width,height,drawColor){
+  canvasContext.fillStyle = drawColor;
+  canvasContext.fillRect(leftX,topY,width,height,drawColor);
+}
+
+
+function drawEverything(){
+  //next line blanks out the screen with black
+  colorRect(0,0,canvas.width,canvas.height,'black');
+  //next line is left player pattle
+  colorRect(0,paddle1Y,10,PADDLE_HEIGHT,'white');
+  //next line is right player pattle
+  colorRect(canvas.width - PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
+  colorCircle(ballX,ballY,10,'white');
+}
+
+function colorCircle(centerX, centerY, radius, drawColor){
+  //next line is the ball!
+  canvasContext.fillStyle = drawColor;
+  canvasContext.beginPath();
+  canvasContext.arc(centerX,centerY,radius,0,Math.PI*2, true);
+  canvasContext.fill();
+}
+
+function ballReset(){
+  ballSpeedX = -ballSpeedX;
+  ballX = canvas.width/2;
+  ballY = canvas.height/2;
+}
+
+function computerMovement(){
+  if(paddle2Y < ballY){
+    paddle2Y += 6;
+  }else{
+    paddle2Y -= 6;
+  }
+}
+
+function moveEverything(){
+  ballX += ballSpeedX;
+  ballY += ballSpeedY;
+
+  //ballSpeedX = ballSpeedX + 1;
+  if(ballX >= canvas.width){
+    if(ballY > paddle2Y &&
+       ballY < paddle2Y+PADDLE_HEIGHT){ //above the bottom of paddle
+         ballSpeedX = -ballSpeedX;
+       }else{
+         ballReset();
+       }
+  }else if(ballX < 0){
+    if(ballY > paddle1Y &&
+       ballY < paddle1Y+PADDLE_HEIGHT){ //above the bottom of paddle
+         ballSpeedX = -ballSpeedX;
+       }else{
+         ballReset();
+       }
+  }
+
+  if(ballY >= canvas.height){
+    ballSpeedY = -ballSpeedY;
+  }else if(ballY < 0){
+    ballSpeedY = -ballSpeedY;
+  }
+
+}
+
+</script>
 </html>
