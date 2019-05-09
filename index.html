@@ -53,7 +53,7 @@ window.onload = function(){
   canvas.addEventListener('mousemove',
     function(evt) {
       var mousePos = calculateMousePos(evt);
-      paddle1Y = mousePos.y-(PADDLE_HEIGHT/2);
+      paddle1Y = mousePos.y - (PADDLE_HEIGHT/2);
     });
 }
 
@@ -88,14 +88,17 @@ function ballReset(){
 }
 
 function computerMovement(){
-  if(paddle2Y < ballY){
-    paddle2Y += 6;
+  var paddle2YCenter = paddle2Y +(PADDLE_HEIGHT/2);
+  if(paddle2YCenter < ballY){
+    paddle2Y += 6; //equal side mean once computed add it bak to variable.
   }else{
     paddle2Y -= 6;
   }
 }
 
 function moveEverything(){
+  computerMovement();
+
   ballX += ballSpeedX;
   ballY += ballSpeedY;
 
