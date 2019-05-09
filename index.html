@@ -35,7 +35,6 @@ function calculateMousePos(evt){
     x:mouseX,
     y:mouseY
   };
-
 }
 
 
@@ -56,6 +55,7 @@ window.onload = function(){
       paddle1Y = mousePos.y - (PADDLE_HEIGHT/2);
     });
 }
+
 
 function colorRect(leftX,topY,width,height,drawColor){
   canvasContext.fillStyle = drawColor;
