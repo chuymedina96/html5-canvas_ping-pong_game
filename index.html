@@ -25,7 +25,6 @@ var paddle2Y    = 250;
 var PADDLE_THICKNESS = 10;
 var PADDLE_HEIGHT = 100;
 
-
 function calculateMousePos(evt){
   var rect = canvas.getBoundingClientRect();
   var root = document.documentElement;
@@ -37,10 +36,9 @@ function calculateMousePos(evt){
   };
 }
 
-
 window.onload = function(){
   console.log("Loaded");
-  canvas = document.getElementById('gameCanvas');
+  canvas = document.getElementById('gameCanvas');.
   canvasContext = canvas.getContext('2d');
 
   var framesPerSecond = 30;
@@ -56,12 +54,10 @@ window.onload = function(){
     });
 }
 
-
 function colorRect(leftX,topY,width,height,drawColor){
   canvasContext.fillStyle = drawColor;
   canvasContext.fillRect(leftX,topY,width,height,drawColor);
 }
-
 
 function drawEverything(){
   //next line blanks out the screen with black
